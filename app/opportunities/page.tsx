@@ -51,7 +51,7 @@ export default function OpportunitiesPage() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const [selectedOpp, setSelectedOpp] = useState<Opportunity | null>(null)
-
+const [recommended, setRecommended] = useState<Opportunity[]>([]);
   // Фильтры
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('Все')
@@ -62,17 +62,32 @@ export default function OpportunitiesPage() {
   useEffect(() => {
     const loadData = async () => {
       const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user || null)
+      const currentUser = session?.user || null;
+      setUser(currentUser);
 
       const { data: opps } = await supabase
         .from('opportunities')
-        .select('*')
-        .eq('is_active', true)
-        .order('deadline', { ascending: true })
+        .select('*');
+      if (opps) {
+        setOpportunities(opps);
+        setFiltered(opps);
+        
+        if (currentUser) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .selects('interests')
+            .eq('id', currentUser.id)
+            .single();
 
-      setOpportunities(opps || [])
-      setFiltered(opps || [])
-
+          if (profile?.interests) {
+            const userInterests = profile.interests.map((i: string) => i.toLowerCase());
+            const recs = opps.filter(op =>
+              op.direction && userInterests.includes(op.direction.toLowerCase())
+            );
+            setRecommended(recs);
+          }
+        }
+      }
       if (session?.user) {
         const { data: saved } = await supabase
           .from('saved_opportunities')
