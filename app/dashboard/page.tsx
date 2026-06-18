@@ -402,7 +402,7 @@ export default function DashboardPage() {
                 <Link
                   href="/opportunities"
                   className="inline-block bg-purple-600 text-white px-6 py-3 
-                             rounded-xl font-medium hover:bg-purple-700 transition-colors"
+                             rounded-xl font-medium hover:bg-purple-700 transition-colors ml-3"
                 >
                   Каталог возможностей →
                 </Link>
