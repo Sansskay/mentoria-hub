@@ -97,7 +97,7 @@ const [recommended, setRecommended] = useState<Opportunity[]>([]);
       }
 
       setLoading(false);
-    }
+    };
     loadData()
   }, [])
 
