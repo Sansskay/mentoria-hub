@@ -399,6 +399,13 @@ export default function DashboardPage() {
                 >
                   Смотреть курсы →
                 </Link>
+                <Link
+                  href="/opportunities"
+                  className="inline-block bg-purple-600 text-white px-6 py-3 
+                             rounded-xl font-medium hover:bg-purple-700 transition-colors"
+                >
+                  Каталог возможностей →
+                </Link>
               </div>
             )}
 
