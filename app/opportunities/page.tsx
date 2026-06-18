@@ -87,7 +87,7 @@ const [recommended, setRecommended] = useState<Opportunity[]>([]);
             setRecommended(recs);
           }
         }
-      }
+      
       if (session?.user) {
         const { data: saved } = await supabase
           .from('saved_opportunities')
@@ -96,7 +96,7 @@ const [recommended, setRecommended] = useState<Opportunity[]>([]);
         setSavedIds(saved?.map((s: any) => s.opportunity_id) || [])
       }
 
-      setLoading(false)
+      setLoading(false);
     }
     loadData()
   }, [])
